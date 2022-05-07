@@ -1,0 +1,20 @@
+create table student(
+sno varchar(10),
+sname varchar(30),
+sage int
+);
+
+create table student_log(
+	who varchar(30),
+	whattime timestamp
+);
+
+create trigger audit_student
+	Before insert on student
+	for each row
+		Begin
+			insert into student_log(who, whattime) VALUES
+(current_user, current_timestamp);
+		End;
+
+insert into student values('1992150033', '吴思远', 40);
