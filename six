@@ -18,3 +18,21 @@ create trigger audit_student
 		End;
 
 insert into student values('1992150033', '吴思远', 40);
+
+select * from student_log;
+
+alter table student_log add (action varchar(20));
+
+insert into student values('2012XXXXXX', 'XXXXX', 20);
+
+select * from student_log;
+
+drop trigger audit_student;
+
+create trigger audit_student_update
+	Before update on student
+	for each row
+		Begin
+			insert into student_log(who, whattime) VALUES
+(current_user, current_timestamp, '更新语句触发');
+		End;
